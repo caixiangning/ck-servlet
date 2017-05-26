@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 修改web.xml版本为3.0 -->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0"
+  metadata-complete="false">
+  <!-- 拷贝web-app标签时需要修改metadata-complete属性为false或者去掉该属性表明启用注解支持，否则如果为true则为忽略注解
+  	同时注解是从Servlet 3.0开始的，用于简化Servlet、Filter及Listener的声明，所以web.xml必须使用Servlet 3.0及以上版本才可以。 -->
+  	
+  	
+  	<!-- *********************用于测试部署Servlet********************* -->
+	<!-- 通过servlet元素servlet-mapping元素部署Servlet -->
+	<!-- servlet元素用于声明Servlet -->
+	<servlet>
+		<!-- servlet-name子元素指定Servlet唯一标识 -->
+		<servlet-name>xmlServlet</servlet-name>
+		<!-- servlet-class子元素指定Servlet类的完整限定名(包名.类名) -->
+		<servlet-class>org.servlet.xml.servlet.XmlServlet</servlet-class>
+	</servlet>
+
+	<!-- servlet-mapping子元素用于在Servlet和URL路径之间定义映射关系 -->
+	<servlet-mapping>
+		<!-- servlet-name子元素用于指定定义映射关系的Servlet的标识 -->
+		<servlet-name>xmlServlet</servlet-name>
+		<!-- url-pattern子元素用于指定相应Servlet的URL路径，该路径是相对于Web应用程序上下文的根路径 -->
+		<url-pattern>/xmlServlet</url-pattern>
+	</servlet-mapping>
+	
+	<!-- *********************用于测试Servlet生命周期(非延迟加载：设置load-on-startup值>=0)********************* -->
+	
+	
+	<!-- ******************用于测试Servlet生命周期(延迟加载：不设置load-on-startup或设置值<0)****************** -->
+	<servlet>
+		<servlet-name>xmlLifeCycleLazyServlet</servlet-name>
+		<servlet-class>org.servlet.xml.lifecycle.XmlLifeCycleServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>xmlLifeCycleLazyServlet</servlet-name>
+		<url-pattern>/xmlLifeCycleLazyServlet</url-pattern>
+	</servlet-mapping>
+</web-app>
