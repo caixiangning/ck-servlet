@@ -30,6 +30,19 @@
 	</servlet-mapping>
 	
 	<!-- *********************用于测试Servlet生命周期(非延迟加载：设置load-on-startup值>=0)********************* -->
+	<servlet>
+		<servlet-name>xmlLifeCycleServlet</servlet-name>
+		<servlet-class>org.servlet.xml.lifecycle.XmlLifeCycleServlet</servlet-class>
+ 		<!-- load-on-startup元素的值必须是整数，当值>=0时表示Servlet容器启动时即加载并实例化Servlet，
+ 		如果load-on-startup元素的值<0或者不设置则初次访问该Servlet才会被加载实例化
+ 		同时当load-on-startup元素的值>=0时值大小表示容器加载的顺序，值越小越先被加载 -->
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>xmlLifeCycleServlet</servlet-name>
+		<url-pattern>/xmlLifeCycleServlet</url-pattern>
+	</servlet-mapping>
 	
 	
 	<!-- ******************用于测试Servlet生命周期(延迟加载：不设置load-on-startup或设置值<0)****************** -->
@@ -42,4 +55,31 @@
 		<servlet-name>xmlLifeCycleLazyServlet</servlet-name>
 		<url-pattern>/xmlLifeCycleLazyServlet</url-pattern>
 	</servlet-mapping>
+	
+	<!-- ******************用于测试Servlet监听器****************** -->
+	<listener>
+		<!-- 要想使监听器起作用必须配置监听器类并且这些类需要实现Servlet几个特定的监听器接口 -->
+		<listener-class>org.servlet.xml.lister.MyServletContextLister</listener-class>
+	</listener>
+	
+	
+	<!-- ******************用于测试Servlet过滤器****************** -->
+	<filter>
+		<filter-name>myCharacterEncodingFilter</filter-name>
+		<!-- 要想使过滤器起作用必须配置过滤器类并且实现Filter接口 -->
+		<filter-class>org.servlet.xml.filter.MyCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ignore</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>myCharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
